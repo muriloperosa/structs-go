@@ -21,18 +21,20 @@ func (u *user) clearName() {
 	u.lastName = ""
 }
 
-func main() {
-	appUser := user{
-		firstName: getUserData("Please enter your first name: "),
-		lastName:  getUserData("Please enter your last name: "),
-		birthdate: getUserData("Please enter your birthdate (MM/DD/YYYY): "),
+func newUser(firstName string, lastName string, birthdate string) *user {
+	return &user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthdate: birthdate,
 		createdAt: time.Now(),
 	}
+}
+
+func main() {
+	appUser := newUser(getUserData("Please enter your first name: "), getUserData("Please enter your last name: "), getUserData("Please enter your birthdate (MM/DD/YYYY): "))
 
 	appUser.output()
-
 	appUser.clearName()
-
 	appUser.output()
 }
 

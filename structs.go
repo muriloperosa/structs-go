@@ -1,51 +1,27 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"time"
+
+	"example.com/structs-go/user"
 )
 
-type user struct {
-	firstName string
-	lastName  string
-	birthdate string
-	createdAt time.Time
-}
-
-func (u user) output() {
-	fmt.Println(u.firstName, u.lastName, u.birthdate, u.createdAt)
-}
-
-func (u *user) clearName() {
-	u.firstName = ""
-	u.lastName = ""
-}
-
-func newUser(firstName string, lastName string, birthdate string) (*user, error) {
-
-	if firstName == "" || lastName == "" || birthdate == "" {
-		return nil, errors.New("first name, last name and birth date are required")
-	}
-
-	return &user{
-		firstName: firstName,
-		lastName:  lastName,
-		birthdate: birthdate,
-		createdAt: time.Now(),
-	}, nil
-}
-
 func main() {
-	appUser, err := newUser(getUserData("Please enter your first name: "), getUserData("Please enter your last name: "), getUserData("Please enter your birthdate (MM/DD/YYYY): "))
+	appUser, err := user.New(getUserData("Please enter your first name: "), getUserData("Please enter your last name: "), getUserData("Please enter your birthdate (MM/DD/YYYY): "))
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
-	appUser.output()
-	appUser.clearName()
-	appUser.output()
+	appUser.Output()
+	appUser.ClearName()
+	appUser.Output()
+
+	admin := user.NewAdmin("perosamurilo@gmail.com", "Murilo")
+
+	admin.Output()
+	admin.ClearName()
+	admin.Output()
 }
 
 func getUserData(promptText string) string {
